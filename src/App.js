@@ -1,14 +1,27 @@
-import React, { Component } from 'react';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
+import styled from 'styled-components';
 
-import Person from './Person/Person';
+import Person from "./Person/Person";
+
+const StyledButton = styled.button`
+background-color: ${props => props.alt ? 'red' : 'green'};
+color: white;
+font: inherit;
+border: 1px solid blue;
+padding: 8px;
+cursor: pointer;
+&:hover {
+  background-color: ${props => props.alt ? 'salmon' : 'lightgreen'};
+  color: black;
+`
 
 class App extends Component {
   state = {
     persons: [
-      { id: 'abc', name: 'Max', age: 28 },
-      { id: 'def', name: 'Milo', age: 21 },
-      { id: 'ghi', name: 'Chloe', age: 24 },
+      { id: "abc", name: "Max", age: 28 },
+      { id: "def", name: "Milo", age: 21 },
+      { id: "ghi", name: "Chloe", age: 24 },
     ],
     showPersons: false
   };
@@ -44,6 +57,19 @@ class App extends Component {
   }
 
   render() {
+    const style = {
+      backgroundColor: "green",
+      color: "white",
+      font: "inherit",
+      border: "1px solid blue",
+      padding: "8px",
+      cursor: "pointer",
+      ':hover': {
+        backgroundColor: 'lightgreen',
+        color: 'black'
+      }
+    }
+
     let persons = null;
     if (this.state.showPersons) {
       persons = (
@@ -60,15 +86,29 @@ class App extends Component {
           }
         </div>
       );
+
+      style.backgroundColor = "red";
+    }
+
+    const classes = [];
+    // let classes = ["red", "bold"].join(" ");
+    if (this.state.persons.length <= 2) {
+      classes.push('red');
+    }
+
+    if (this.state.persons.length <= 1) {
+      classes.push('bold');
     }
 
     return (
-      <div className="App">
-        <br></br>
-        <button onClick={this.togglePersonsHandler}>Change Places</button>
-        {persons}
-      </div>
+        <div className="App">
+          <br></br>
+          {/* <StyledButton alt={this.state.showPersons} onClick={this.togglePersonsHandler}>Toggle People</StyledButton> */}
+          <button className="button"  onClick={this.togglePersonsHandler}>Change Places</button>
+          {persons}
+        </div>
     );
   }
 }
+
 export default App;
